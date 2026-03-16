@@ -272,6 +272,17 @@
       line-height: 1.95;
     }
     .hero-sub strong { color: var(--text); }
+    .hero-quote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.01em;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.3s forwards;
+    }
+    .hero-quote em { color: var(--accent2); font-style: normal; }
     .hero-actions {
       display: flex;
       gap: 1rem;
@@ -484,7 +495,7 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#skills">Skills</a></li>
-      <li><a href="mailto:tavisfong@gmail.com" class="btn btn-primary" style="padding:0.4rem 1rem;">Hire me</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#047065726d77626b6a63446369656d682a676b69" class="btn btn-primary" style="padding:0.4rem 1rem;">Hire me</a></li>
     </ul>
   </nav>
 
@@ -493,17 +504,18 @@
     <div class="container hero-content">
       <div class="hero-tag"><span class="live-dot"></span>ISTQB Certified &middot; Open to Opportunities</div>
       <h1>Tavis<br><em>Fong</em></h1>
+      <div class="hero-quote">&ldquo;I will either find a way, or make one.&rdquo; &mdash; <em>Hannibal</em></div>
       <div class="hero-role">QA Engineering Leader &middot; SDET &middot; Automation Architect</div>
       <p class="hero-sub">Strategic QA leader specializing in <strong>operational hardening</strong> for high-growth startups and regulated industries. I bridge rapid development and enterprise-grade reliability through AI-driven testing, CI/CD integration, and rigorous validation &mdash; equally at home leading cross-functional teams or contributing as a high-level IC.</p>
       <div class="hero-actions">
         <a href="#experience" class="btn btn-primary">View my work</a>
         <a href="https://linkedin.com/in/tavisfong" target="_blank" class="btn">LinkedIn</a>
         <a href="https://github.com/Cannamander" target="_blank" class="btn">GitHub</a>
-        <a href="mailto:tavisfong@gmail.com" class="btn">Contact</a>
+        <a href="/cdn-cgi/l/email-protection#7a0e1b0c13091c15141d3a1d171b131654191517" class="btn">Contact</a>
       </div>
       <div class="hero-meta">
         <div class="hero-meta-item">Location<span>Long Beach, CA</span></div>
-        <div class="hero-meta-item">Email<span>tavisfong@gmail.com</span></div>
+        <div class="hero-meta-item">Email<span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e59184938c96838a8b82a58288848c89cb868a88">[email&#160;protected]</a></span></div>
         <div class="hero-meta-item">Phone<span>303-667-4548</span></div>
         <div class="hero-meta-item">Certification<span>ISTQB CTFL</span></div>
       </div>
@@ -768,13 +780,13 @@
           <a href="https://github.com/Cannamander" target="_blank">GitHub</a>
           <a href="https://linkedin.com/in/tavisfong" target="_blank">LinkedIn</a>
           <a href="tel:3036674548">303-667-4548</a>
-          <a href="mailto:tavisfong@gmail.com">Email</a>
+          <a href="/cdn-cgi/l/email-protection#691d081f001a0f06070e290e04080005470a0604">Email</a>
         </div>
       </div>
     </div>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // Custom cursor
     var cursor = document.getElementById('cursor');
     var ring = document.getElementById('cursor-ring');
@@ -820,15 +832,3 @@
 
     // Scroll reveal
     var obs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-      });
-    }, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
-
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el) {
-      obs.observe(el);
-    });
-  </script>
-
-</body>
-</html>
