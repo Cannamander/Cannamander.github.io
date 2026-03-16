@@ -43,7 +43,6 @@
 
     .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
 
-    /* Nav */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -92,7 +91,6 @@
     .btn:hover { border-color: var(--accent); color: var(--accent); }
     .btn-primary:hover { background: transparent; color: var(--accent); }
 
-    /* Hero */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -153,6 +151,7 @@
       animation: fadeUp 0.7s 0.4s forwards;
       line-height: 1.9;
     }
+    .hero-sub strong { color: var(--text); }
     .hero-actions {
       display: flex;
       gap: 1rem;
@@ -173,8 +172,8 @@
     .hero-meta-item { font-size: 0.72rem; color: var(--muted); }
     .hero-meta-item span { display: block; color: var(--text); font-size: 0.82rem; margin-top: 0.2rem; }
 
-    /* Sections */
     section { padding: 6rem 0; border-top: 1px solid var(--border); }
+
     .section-label {
       font-size: 0.68rem;
       letter-spacing: 0.2em;
@@ -187,16 +186,6 @@
     }
     .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    /* Summary */
-    .summary-text {
-      font-size: 0.95rem;
-      line-height: 1.9;
-      color: var(--muted);
-      max-width: 700px;
-    }
-    .summary-text strong { color: var(--text); font-weight: 500; }
-
-    /* Experience */
     .exp-item {
       display: grid;
       grid-template-columns: 200px 1fr;
@@ -209,6 +198,8 @@
     .exp-date { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 0.5rem; }
     .exp-company { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--accent); line-height: 1.2; }
     .exp-title { font-size: 0.78rem; color: var(--text); margin-top: 0.3rem; letter-spacing: 0.03em; }
+    .exp-note { font-size: 0.68rem; color: var(--muted); margin-top: 0.3rem; font-style: italic; }
+
     .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
     .exp-bullets li {
       font-size: 0.81rem;
@@ -219,6 +210,7 @@
     }
     .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--border); }
     .exp-bullets li strong { color: var(--text); font-weight: 500; }
+
     .exp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
     .tag {
       font-size: 0.62rem;
@@ -229,7 +221,6 @@
       color: var(--muted);
     }
 
-    /* Projects */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -260,11 +251,17 @@
     .project-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; line-height: 1.2; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
     .project-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.25rem; }
     .project-links { display: flex; gap: 1rem; }
-    .project-link { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); text-decoration: none; transition: color 0.2s; }
+    .project-link {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
     .project-link:hover { color: var(--accent); }
-    .project-link::after { content: ' →'; }
+    .project-link::after { content: ' \2192'; }
 
-    /* Skills */
     .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2rem; }
     .skill-group h3 {
       font-size: 0.68rem;
@@ -277,10 +274,9 @@
     }
     .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
     .skill-list li { font-size: 0.82rem; color: var(--muted); padding-left: 1rem; position: relative; transition: color 0.2s; }
-    .skill-list li::before { content: '—'; position: absolute; left: 0; color: var(--border); }
+    .skill-list li::before { content: '\2014'; position: absolute; left: 0; color: var(--border); }
     .skill-list li:hover { color: var(--text); }
 
-    /* Certifications */
     .cert-row {
       display: flex;
       align-items: center;
@@ -295,13 +291,11 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 0.65rem;
       color: var(--accent);
-      letter-spacing: 0.05em;
       flex-shrink: 0;
     }
     .cert-name { font-size: 0.85rem; color: var(--text); }
     .cert-org { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
 
-    /* Footer */
     footer { border-top: 1px solid var(--border); padding: 3rem 0; }
     .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
     .footer-name { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: 0.9rem; }
@@ -309,7 +303,6 @@
     .footer-links a { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--accent); }
 
-    /* Animations */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -317,13 +310,11 @@
     .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s, transform 0.6s; }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* Responsive */
     @media (max-width: 640px) {
       .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
       nav { padding: 1rem 1.25rem; }
       .nav-links { gap: 1rem; }
       .container { padding: 0 1.25rem; }
-      .hero-meta { gap: 1.25rem; }
     }
   </style>
 </head>
@@ -335,59 +326,61 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#skills">Skills</a></li>
-      <li><a href="/cdn-cgi/l/email-protection#3b4f5a4d52485d54555c7b5c565a525715585456" class="btn btn-primary" style="padding:0.4rem 1rem;">Hire me</a></li>
+      <li><a href="mailto:tavisfong@gmail.com" class="btn btn-primary" style="padding:0.4rem 1rem;">Hire me</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-grid"></div>
     <div class="container hero-content">
-      <div class="hero-tag">ISTQB Certified · Open to Opportunities</div>
-      <h1>Tavis<br/><em>Fong</em></h1>
-      <div class="hero-role">QA Engineering Leader · SDET · Automation Architect</div>
-      <p class="hero-sub">Strategic QA leader specializing in <strong>operational hardening</strong> for high-growth startups and regulated industries. I bridge rapid development and enterprise-grade reliability through AI-driven testing, CI/CD integration, and rigorous validation — equally at home leading cross-functional teams or contributing as a high-level IC.</p>
+      <div class="hero-tag">ISTQB Certified &middot; Open to Opportunities</div>
+      <h1>Tavis<br><em>Fong</em></h1>
+      <div class="hero-role">QA Engineering Leader &middot; SDET &middot; Automation Architect</div>
+      <p class="hero-sub">Strategic QA leader specializing in <strong>operational hardening</strong> for high-growth startups and regulated industries. I bridge rapid development and enterprise-grade reliability through AI-driven testing, CI/CD integration, and rigorous validation &mdash; equally at home leading cross-functional teams or contributing as a high-level IC.</p>
       <div class="hero-actions">
         <a href="#experience" class="btn btn-primary">View my work</a>
         <a href="https://linkedin.com/in/tavisfong" target="_blank" class="btn">LinkedIn</a>
         <a href="https://github.com/Cannamander" target="_blank" class="btn">GitHub</a>
-        <a href="/cdn-cgi/l/email-protection#651104130c16030a0b02250208040c094b060a08" class="btn">Contact</a>
+        <a href="mailto:tavisfong@gmail.com" class="btn">Contact</a>
       </div>
       <div class="hero-meta">
         <div class="hero-meta-item">Location<span>Long Beach, CA</span></div>
-        <div class="hero-meta-item">Email<span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c7b3a6b1aeb4a1a8a9a087a0aaa6aeabe9a4a8aa">[email&#160;protected]</a></span></div>
+        <div class="hero-meta-item">Email<span>tavisfong@gmail.com</span></div>
         <div class="hero-meta-item">Phone<span>303-667-4548</span></div>
         <div class="hero-meta-item">Certification<span>ISTQB CTFL</span></div>
       </div>
     </div>
   </div>
 
-  <!-- EXPERIENCE -->
   <section id="experience">
     <div class="container">
       <div class="section-label">Professional Experience</div>
 
       <div class="exp-item reveal">
         <div class="exp-meta">
-          <div class="exp-date">June 2025 — Present</div>
+          <div class="exp-date">June 2025 &mdash; Present</div>
           <div class="exp-company">Creative Dash AI</div>
           <div class="exp-title">Staff Automation Architect</div>
         </div>
         <div>
           <ul class="exp-bullets">
             <li><strong>Infrastructure Reliability:</strong> Architected automated data flows for a SaaS platform, ensuring 99.9% reliability for real-time lead generation and AI phone agent deployments.</li>
-            <li><strong>AI Validation Engineering:</strong> Designed custom validation layers for NWS weather data ingestion, using Python logic to filter and enrich data before CRM delivery — transforming a volatile feed into a predictable, high-value sales asset.</li>
+            <li><strong>AI Validation Engineering:</strong> Designed custom validation layers for NWS weather data ingestion, using Python logic to filter and enrich data before CRM delivery &mdash; transforming a volatile feed into a predictable, high-value sales asset.</li>
             <li><strong>Quality Roadmap:</strong> Established end-to-end testing lifecycle for AI agent interactions, focusing on conversational accuracy and systemic uptime across diverse client environments.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">Python</span><span class="tag">AI Validation</span><span class="tag">Make.com</span><span class="tag">GoHighLevel</span><span class="tag">SaaS</span>
+            <span class="tag">Python</span>
+            <span class="tag">AI Validation</span>
+            <span class="tag">Make.com</span>
+            <span class="tag">GoHighLevel</span>
+            <span class="tag">SaaS</span>
           </div>
         </div>
       </div>
 
       <div class="exp-item reveal">
         <div class="exp-meta">
-          <div class="exp-date">Jan 2024 — Jan 2026</div>
+          <div class="exp-date">Jan 2024 &mdash; Jan 2026</div>
           <div class="exp-company">LavenirAI</div>
           <div class="exp-title">Staff Quality Engineer / AI Solutions Developer</div>
         </div>
@@ -398,14 +391,18 @@
             <li><strong>Technical Oversight:</strong> Defined quality SLAs and led validation of complex backend systems, ensuring high-fidelity integration between AI agents and core infrastructure.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">LLM Validation</span><span class="tag">RAG Architecture</span><span class="tag">Pytest</span><span class="tag">CI/CD</span><span class="tag">Prompt Engineering</span>
+            <span class="tag">LLM Validation</span>
+            <span class="tag">RAG Architecture</span>
+            <span class="tag">Pytest</span>
+            <span class="tag">CI/CD</span>
+            <span class="tag">Prompt Engineering</span>
           </div>
         </div>
       </div>
 
       <div class="exp-item reveal">
         <div class="exp-meta">
-          <div class="exp-date">June 2021 — Jan 2024</div>
+          <div class="exp-date">June 2021 &mdash; Jan 2024</div>
           <div class="exp-company">DispatchHealth</div>
           <div class="exp-title">Software Engineer in Test / QA Engineer III</div>
         </div>
@@ -413,20 +410,24 @@
           <ul class="exp-bullets">
             <li><strong>Framework Development:</strong> Built and maintained end-to-end automation frameworks for a high-stakes healthcare platform, prioritizing patient safety and HIPAA data integrity.</li>
             <li><strong>CI/CD Integration:</strong> Led integration of automated quality gates into the deployment pipeline, accelerating release cycles while maintaining zero critical production outages during a 10x growth phase.</li>
-            <li><strong>Leadership & Mentorship:</strong> Acted as technical lead for testing initiatives, guiding junior engineers in modern automation best practices.</li>
+            <li><strong>Leadership &amp; Mentorship:</strong> Acted as technical lead for testing initiatives, guiding junior engineers in modern automation best practices.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">Cypress</span><span class="tag">Playwright</span><span class="tag">HIPAA</span><span class="tag">GitHub Actions</span><span class="tag">Healthcare</span>
+            <span class="tag">Cypress</span>
+            <span class="tag">Playwright</span>
+            <span class="tag">HIPAA</span>
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">Healthcare</span>
           </div>
         </div>
       </div>
 
       <div class="exp-item reveal">
         <div class="exp-meta">
-          <div class="exp-date">May 2019 — April 2021</div>
+          <div class="exp-date">May 2019 &mdash; April 2021</div>
           <div class="exp-company">MiTek USA</div>
           <div class="exp-title">Lead Quality Assurance Analyst</div>
-          <div class="exp-date" style="margin-top:0.4rem; font-style:italic;">A Berkshire Hathaway Company</div>
+          <div class="exp-note">A Berkshire Hathaway Company</div>
         </div>
         <div>
           <ul class="exp-bullets">
@@ -434,14 +435,16 @@
             <li><strong>Process Optimization:</strong> Standardized testing protocols across distributed international teams, reducing post-release incidents by 25% and ensuring consistency in cloud-based software reliability.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">Enterprise QA</span><span class="tag">Cloud</span><span class="tag">Distributed Teams</span>
+            <span class="tag">Enterprise QA</span>
+            <span class="tag">Cloud</span>
+            <span class="tag">Distributed Teams</span>
           </div>
         </div>
       </div>
 
       <div class="exp-item reveal">
         <div class="exp-meta">
-          <div class="exp-date">Nov 2015 — May 2019</div>
+          <div class="exp-date">Nov 2015 &mdash; May 2019</div>
           <div class="exp-company">BuilderMT</div>
           <div class="exp-title">Lead QA Analyst / Product Owner</div>
         </div>
@@ -451,7 +454,9 @@
             <li><strong>Systemic Improvement:</strong> Overhauled the release cycle by introducing automated regression suites, reducing late-stage defects and cutting regression cycle times in half.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">Product Ownership</span><span class="tag">Regression Automation</span><span class="tag">M&A Migration</span>
+            <span class="tag">Product Ownership</span>
+            <span class="tag">Regression Automation</span>
+            <span class="tag">M&amp;A Migration</span>
           </div>
         </div>
       </div>
@@ -467,7 +472,11 @@
             <li>Managed QA teams for game development including localization, performance, and functionality testing for high-profile titles including <em>The Elder Scrolls: Legends</em>.</li>
             <li>Developed automated test cases to increase efficiency in game testing workflows across iPad and PC platforms.</li>
           </ul>
-          <div class="exp-tags"><span class="tag">Game QA</span><span class="tag">Localization</span><span class="tag">Performance Testing</span></div>
+          <div class="exp-tags">
+            <span class="tag">Game QA</span>
+            <span class="tag">Localization</span>
+            <span class="tag">Performance Testing</span>
+          </div>
         </div>
       </div>
 
@@ -482,14 +491,17 @@
             <li>Managed enterprise QA projects across gaming, mobile, healthcare, and SaaS industries for startups and Fortune 500 clients.</li>
             <li>Oversaw stakeholder communication, project planning, and resource allocation across diverse technical stacks.</li>
           </ul>
-          <div class="exp-tags"><span class="tag">Multi-Industry</span><span class="tag">Project Management</span><span class="tag">Fortune 500</span></div>
+          <div class="exp-tags">
+            <span class="tag">Multi-Industry</span>
+            <span class="tag">Project Management</span>
+            <span class="tag">Fortune 500</span>
+          </div>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects">
     <div class="container">
       <div class="section-label">Projects</div>
@@ -498,7 +510,7 @@
         <div class="project-card">
           <div class="project-num">01</div>
           <div class="project-name">STROMAI</div>
-          <p class="project-desc">Storm monitoring platform that ingests live NWS weather alert polygons, resolves affected zip codes, and skip traces homeowner contact data — generating targeted leads for storm-dependent businesses like public adjusters. The same NWS validation architecture was deployed commercially at Creative Dash AI, achieving 99% lead reliability. Built on Node.js and Supabase.</p>
+          <p class="project-desc">Storm monitoring platform that ingests live NWS weather alert polygons, resolves affected zip codes, and skip traces homeowner contact data &mdash; generating targeted leads for storm-dependent businesses like public adjusters. The same NWS validation architecture was deployed commercially at Creative Dash AI, achieving 99% lead reliability. Built on Node.js and Supabase.</p>
           <div class="project-links">
             <a href="https://github.com/Cannamander/STROMAI" target="_blank" class="project-link">GitHub</a>
           </div>
@@ -507,7 +519,7 @@
         <div class="project-card">
           <div class="project-num">02</div>
           <div class="project-name">Choosr</div>
-          <p class="project-desc">AI-powered app that eliminates decision fatigue for everyday choices — food, plans, entertainment. Users pick a category and get a personalized AI recommendation; selections feed a learning loop that sharpens future suggestions over time. Built with React, Express, Supabase Auth, and OpenRouter. Live on Vercel.</p>
+          <p class="project-desc">AI-powered app that eliminates decision fatigue for everyday choices &mdash; food, plans, entertainment. Users pick a category and get a personalized AI recommendation; selections feed a learning loop that sharpens future suggestions over time. Built with React, Express, Supabase Auth, and OpenRouter. Live on Vercel.</p>
           <div class="project-links">
             <a href="https://github.com/Cannamander/Choosr" target="_blank" class="project-link">GitHub</a>
             <a href="https://choosr.vercel.app" target="_blank" class="project-link">Live</a>
@@ -517,7 +529,7 @@
         <div class="project-card">
           <div class="project-num">03</div>
           <div class="project-name">Leadgen Scraper</div>
-          <p class="project-desc">Python web crawler built for lead generation at scale. Automates prospect discovery and data extraction across target domains, feeding downstream CRM and outreach pipelines — the same data ingestion discipline applied across professional engagements.</p>
+          <p class="project-desc">Python web crawler built for lead generation at scale. Automates prospect discovery and data extraction across target domains, feeding downstream CRM and outreach pipelines &mdash; the same data ingestion discipline applied across professional engagements.</p>
           <div class="project-links">
             <a href="https://github.com/Cannamander/leadgen-scraper" target="_blank" class="project-link">GitHub</a>
           </div>
@@ -527,7 +539,6 @@
     </div>
   </section>
 
-  <!-- SKILLS -->
   <section id="skills">
     <div class="container">
       <div class="section-label">Technical Toolkit</div>
@@ -546,7 +557,7 @@
         </div>
 
         <div class="skill-group">
-          <h3>AI & LLM</h3>
+          <h3>AI &amp; LLM</h3>
           <ul class="skill-list">
             <li>OpenAI API</li>
             <li>RAG Architecture</li>
@@ -577,7 +588,7 @@
         </div>
 
         <div class="skill-group">
-          <h3>Automation & CRM</h3>
+          <h3>Automation &amp; CRM</h3>
           <ul class="skill-list">
             <li>Make.com</li>
             <li>Zapier</li>
@@ -598,15 +609,14 @@
 
       </div>
 
-      <!-- Certs -->
-      <div style="margin-top: 4rem;">
-        <div class="section-label">Certifications & Education</div>
+      <div style="margin-top:4rem;">
+        <div class="section-label">Certifications &amp; Education</div>
         <div class="reveal">
           <div class="cert-row">
             <div class="cert-badge">ISTQB</div>
             <div>
               <div class="cert-name">Certified Tester, Foundation Level (CTFL)</div>
-              <div class="cert-org">ISTQB — International Software Testing Qualifications Board</div>
+              <div class="cert-org">ISTQB &mdash; International Software Testing Qualifications Board</div>
             </div>
           </div>
           <div class="cert-row">
@@ -629,5 +639,20 @@
           <a href="https://github.com/Cannamander" target="_blank">GitHub</a>
           <a href="https://linkedin.com/in/tavisfong" target="_blank">LinkedIn</a>
           <a href="tel:3036674548">303-667-4548</a>
-          <a href="/cdn-cgi/l/email-protection#becadfc8d7cdd8d1d0d9fed9d3dfd7d290ddd1d3">Email</a>
+          <a href="mailto:tavisfong@gmail.com">Email</a>
         </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+  </script>
+
+</body>
+</html>
