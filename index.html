@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tavis Fong — QA Engineering Leader</title>
+  <title>Tavis Fong &mdash; QA Engineering Leader</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0a0a0b;
-      --surface: #111113;
-      --border: #222226;
+      --bg: #07080a;
+      --surface: #0e0f12;
+      --border: #1c1e24;
       --accent: #c8f135;
       --accent2: #4af0c4;
+      --accent3: #7b6cff;
       --text: #e8e8ec;
-      --muted: #6a6a78;
+      --muted: #5a5a6a;
       --mono: 'DM Mono', monospace;
       --serif: 'Fraunces', Georgia, serif;
     }
@@ -29,38 +30,125 @@
       font-size: 14px;
       line-height: 1.7;
       overflow-x: hidden;
+      cursor: none;
     }
 
-    body::before {
+    /* Custom cursor */
+    #cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s;
+      mix-blend-mode: difference;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(200,241,53,0.35);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99998;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-large #cursor { width: 18px; height: 18px; }
+    .cursor-large #cursor-ring { width: 54px; height: 54px; border-color: rgba(74,240,196,0.5); }
+
+    /* Animated mesh background */
+    .mesh-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.07;
+    }
+    .orb-1 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, var(--accent3), transparent 70%);
+      top: -200px; left: -150px;
+      animation: float1 20s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, var(--accent2), transparent 70%);
+      bottom: -100px; right: -100px;
+      animation: float2 25s ease-in-out infinite alternate;
+    }
+    .orb-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, var(--accent), transparent 70%);
+      top: 40%; left: 40%;
+      animation: float3 30s ease-in-out infinite alternate;
+      opacity: 0.04;
+    }
+
+    @keyframes float1 {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(180px, 280px) scale(1.25); }
+    }
+    @keyframes float2 {
+      from { transform: translate(0,0) scale(1.1); }
+      to   { transform: translate(-220px, -180px) scale(0.85); }
+    }
+    @keyframes float3 {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(120px, -160px) scale(1.15); }
+    }
+
+    /* Mouse glow */
+    #mouse-glow {
+      position: fixed;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,241,53,0.035) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Grain overlay */
+    body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 9999;
-      opacity: 0.5;
+      z-index: 9998;
     }
 
-    .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
 
+    /* Nav */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 1000;
       padding: 1.25rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(10,10,11,0.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      background: rgba(7,8,10,0.6);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: background 0.4s, border-color 0.4s;
     }
+    nav.scrolled { background: rgba(7,8,10,0.92); border-bottom-color: var(--border); }
     .nav-logo {
       font-family: var(--serif);
       font-size: 1.1rem;
       font-style: italic;
       color: var(--accent);
       letter-spacing: -0.02em;
+      cursor: none;
     }
     .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
     .nav-links a {
@@ -70,8 +158,22 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       transition: color 0.2s;
+      cursor: none;
+      position: relative;
     }
-    .nav-links a:hover { color: var(--accent); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
 
     .btn {
       display: inline-block;
@@ -83,14 +185,15 @@
       text-decoration: none;
       border: 1px solid var(--border);
       color: var(--text);
-      transition: all 0.2s;
-      cursor: pointer;
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+      cursor: none;
       background: transparent;
     }
+    .btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(200,241,53,0.04); }
     .btn-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 500; }
-    .btn:hover { border-color: var(--accent); color: var(--accent); }
     .btn-primary:hover { background: transparent; color: var(--accent); }
 
+    /* Hero */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -106,41 +209,58 @@
         linear-gradient(var(--border) 1px, transparent 1px),
         linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 60px 60px;
-      opacity: 0.35;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
+      opacity: 0.4;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 80%);
     }
-    .hero-content { position: relative; z-index: 1; }
+    .hero-content { position: relative; z-index: 2; }
+
     .hero-tag {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
       font-size: 0.7rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent2);
-      border: 1px solid var(--accent2);
-      padding: 0.3rem 0.75rem;
+      border: 1px solid rgba(74,240,196,0.3);
+      padding: 0.3rem 0.8rem;
       margin-bottom: 2rem;
+      background: rgba(74,240,196,0.04);
       opacity: 0;
       animation: fadeUp 0.6s 0.1s forwards;
     }
+    .live-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent2);
+      animation: livePulse 2s infinite;
+      flex-shrink: 0;
+    }
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,240,196,0.4); }
+      50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(74,240,196,0); }
+    }
+
     .hero h1 {
       font-family: var(--serif);
-      font-size: clamp(3.5rem, 10vw, 7rem);
+      font-size: clamp(3.5rem, 10vw, 7.5rem);
       font-weight: 300;
-      line-height: 0.95;
+      line-height: 0.92;
       letter-spacing: -0.03em;
       margin-bottom: 1.5rem;
       opacity: 0;
-      animation: fadeUp 0.7s 0.2s forwards;
+      animation: fadeUp 0.75s 0.22s forwards;
     }
     .hero h1 em { font-style: italic; color: var(--accent); }
+
     .hero-role {
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--accent2);
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
       opacity: 0;
-      animation: fadeUp 0.7s 0.3s forwards;
+      animation: fadeUp 0.7s 0.34s forwards;
     }
     .hero-sub {
       font-size: 0.85rem;
@@ -148,8 +268,8 @@
       max-width: 520px;
       margin-bottom: 2.5rem;
       opacity: 0;
-      animation: fadeUp 0.7s 0.4s forwards;
-      line-height: 1.9;
+      animation: fadeUp 0.7s 0.46s forwards;
+      line-height: 1.95;
     }
     .hero-sub strong { color: var(--text); }
     .hero-actions {
@@ -157,26 +277,50 @@
       gap: 1rem;
       flex-wrap: wrap;
       opacity: 0;
-      animation: fadeUp 0.7s 0.55s forwards;
+      animation: fadeUp 0.7s 0.6s forwards;
     }
     .hero-meta {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       flex-wrap: wrap;
-      margin-top: 3rem;
+      margin-top: 3.5rem;
       padding-top: 2rem;
       border-top: 1px solid var(--border);
       opacity: 0;
-      animation: fadeUp 0.7s 0.7s forwards;
+      animation: fadeUp 0.7s 0.74s forwards;
     }
-    .hero-meta-item { font-size: 0.72rem; color: var(--muted); }
-    .hero-meta-item span { display: block; color: var(--text); font-size: 0.82rem; margin-top: 0.2rem; }
+    .hero-meta-item { font-size: 0.7rem; color: var(--muted); }
+    .hero-meta-item span { display: block; color: var(--text); font-size: 0.8rem; margin-top: 0.25rem; }
 
-    section { padding: 6rem 0; border-top: 1px solid var(--border); }
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeIn 1s 1.6s forwards;
+      z-index: 2;
+    }
+    .scroll-hint span { font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--muted), transparent); animation: scrollAnim 2s ease-in-out infinite; }
+    @keyframes scrollAnim {
+      0% { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+    /* Sections */
+    section { padding: 7rem 0; border-top: 1px solid var(--border); position: relative; z-index: 2; }
 
     .section-label {
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
+      font-size: 0.64rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--accent2);
       margin-bottom: 3rem;
@@ -184,143 +328,157 @@
       align-items: center;
       gap: 1rem;
     }
-    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, var(--border), transparent); }
 
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-left { opacity: 0; transform: translateX(-22px); transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-right { opacity: 0; transform: translateX(22px); transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible, .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: none; }
+
+    .d1 { transition-delay: 0.04s; }
+    .d2 { transition-delay: 0.1s; }
+    .d3 { transition-delay: 0.17s; }
+    .d4 { transition-delay: 0.24s; }
+    .d5 { transition-delay: 0.31s; }
+
+    /* Experience */
     .exp-item {
       display: grid;
       grid-template-columns: 200px 1fr;
       gap: 2rem;
-      padding: 2.25rem 0;
+      padding: 2.5rem 0;
       border-bottom: 1px solid var(--border);
-    }
-    .exp-item:last-child { border-bottom: none; }
-    .exp-meta { padding-top: 0.15rem; }
-    .exp-date { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 0.5rem; }
-    .exp-company { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--accent); line-height: 1.2; }
-    .exp-title { font-size: 0.78rem; color: var(--text); margin-top: 0.3rem; letter-spacing: 0.03em; }
-    .exp-note { font-size: 0.68rem; color: var(--muted); margin-top: 0.3rem; font-style: italic; }
-
-    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-    .exp-bullets li {
-      font-size: 0.81rem;
-      color: var(--muted);
-      line-height: 1.75;
-      padding-left: 1rem;
       position: relative;
     }
-    .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--border); }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--accent) 50%, transparent);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .exp-item:hover::before { opacity: 1; }
+
+    .exp-date { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .exp-company { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: var(--accent); line-height: 1.2; }
+    .exp-title { font-size: 0.78rem; color: var(--text); margin-top: 0.3rem; }
+    .exp-note { font-size: 0.65rem; color: var(--muted); margin-top: 0.3rem; font-style: italic; }
+
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .exp-bullets li { font-size: 0.81rem; color: var(--muted); line-height: 1.8; padding-left: 1.25rem; position: relative; transition: color 0.2s; }
+    .exp-bullets li:hover { color: var(--text); }
+    .exp-bullets li::before { content: '\2014'; position: absolute; left: 0; color: var(--border); }
     .exp-bullets li strong { color: var(--text); font-weight: 500; }
 
-    .exp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
-    .tag {
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.55rem;
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem; }
+    .tag { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.22rem 0.6rem; border: 1px solid var(--border); color: var(--muted); transition: border-color 0.2s, color 0.2s; }
+    .tag:hover { border-color: var(--accent2); color: var(--accent2); }
 
+    /* Projects */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
     }
     .project-card {
       background: var(--bg);
-      padding: 2rem;
-      transition: background 0.2s;
+      padding: 2.25rem;
       position: relative;
       overflow: hidden;
+      transition: background 0.3s;
     }
     .project-card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: var(--accent);
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
       transform: scaleX(0);
       transform-origin: left;
-      transition: transform 0.3s;
+      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+    }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% -20%, rgba(200,241,53,0.05) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
     }
     .project-card:hover { background: var(--surface); }
     .project-card:hover::before { transform: scaleX(1); }
-    .project-num { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; margin-bottom: 1rem; }
-    .project-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; line-height: 1.2; margin-bottom: 0.75rem; letter-spacing: -0.02em; }
-    .project-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.25rem; }
-    .project-links { display: flex; gap: 1rem; }
-    .project-link {
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent2);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+    .project-card:hover::after { opacity: 1; }
+
+    .project-num { font-size: 0.6rem; color: var(--muted); letter-spacing: 0.18em; margin-bottom: 1rem; }
+    .project-name { font-family: var(--serif); font-size: 1.35rem; font-weight: 300; line-height: 1.15; margin-bottom: 0.75rem; letter-spacing: -0.02em; transition: color 0.25s; position: relative; z-index: 1; }
+    .project-card:hover .project-name { color: var(--accent); }
+    .project-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.5rem; position: relative; z-index: 1; }
+    .project-links { display: flex; gap: 1rem; position: relative; z-index: 1; }
+    .project-link { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); text-decoration: none; transition: color 0.2s; cursor: none; display: inline-flex; align-items: center; gap: 0.25rem; }
+    .project-link::after { content: '\2192'; display: inline-block; transition: transform 0.2s; }
     .project-link:hover { color: var(--accent); }
-    .project-link::after { content: ' \2192'; }
+    .project-link:hover::after { transform: translateX(3px); }
 
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2rem; }
-    .skill-group h3 {
-      font-size: 0.68rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
-    .skill-list li { font-size: 0.82rem; color: var(--muted); padding-left: 1rem; position: relative; transition: color 0.2s; }
-    .skill-list li::before { content: '\2014'; position: absolute; left: 0; color: var(--border); }
-    .skill-list li:hover { color: var(--text); }
+    /* Skills */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 2rem; }
+    .skill-group h3 { font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+    .skill-list li { font-size: 0.8rem; color: var(--muted); padding-left: 1rem; position: relative; transition: color 0.2s, transform 0.25s cubic-bezier(0.16,1,0.3,1); cursor: default; }
+    .skill-list li::before { content: '\2014'; position: absolute; left: 0; color: var(--border); transition: color 0.2s; }
+    .skill-list li:hover { color: var(--text); transform: translateX(5px); }
+    .skill-list li:hover::before { color: var(--accent); }
 
-    .cert-row {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 1.25rem 0;
-      border-bottom: 1px solid var(--border);
-    }
+    /* Certs */
+    .cert-row { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border); transition: padding-left 0.3s cubic-bezier(0.16,1,0.3,1); }
     .cert-row:last-child { border-bottom: none; }
-    .cert-badge {
-      width: 36px; height: 36px;
-      border: 1px solid var(--accent);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.65rem;
-      color: var(--accent);
-      flex-shrink: 0;
-    }
+    .cert-row:hover { padding-left: 0.75rem; }
+    .cert-badge { width: 40px; height: 40px; border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: var(--accent); flex-shrink: 0; transition: background 0.2s; }
+    .cert-row:hover .cert-badge { background: rgba(200,241,53,0.08); }
     .cert-name { font-size: 0.85rem; color: var(--text); }
-    .cert-org { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
+    .cert-org { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
 
-    footer { border-top: 1px solid var(--border); padding: 3rem 0; }
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 3rem 0; position: relative; z-index: 2; }
     .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
     .footer-name { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: 0.9rem; }
     .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; cursor: none; }
     .footer-links a:hover { color: var(--accent); }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s, transform 0.6s; }
-    .reveal.visible { opacity: 1; transform: none; }
 
     @media (max-width: 640px) {
       .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
       nav { padding: 1rem 1.25rem; }
       .nav-links { gap: 1rem; }
       .container { padding: 0 1.25rem; }
+      body { cursor: auto; }
+      #cursor, #cursor-ring { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <nav>
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+  <div id="mouse-glow"></div>
+
+  <div class="mesh-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <nav id="nav">
     <div class="nav-logo">Tavis Fong</div>
     <ul class="nav-links">
       <li><a href="#experience">Experience</a></li>
@@ -333,7 +491,7 @@
   <div class="hero">
     <div class="hero-grid"></div>
     <div class="container hero-content">
-      <div class="hero-tag">ISTQB Certified &middot; Open to Opportunities</div>
+      <div class="hero-tag"><span class="live-dot"></span>ISTQB Certified &middot; Open to Opportunities</div>
       <h1>Tavis<br><em>Fong</em></h1>
       <div class="hero-role">QA Engineering Leader &middot; SDET &middot; Automation Architect</div>
       <p class="hero-sub">Strategic QA leader specializing in <strong>operational hardening</strong> for high-growth startups and regulated industries. I bridge rapid development and enterprise-grade reliability through AI-driven testing, CI/CD integration, and rigorous validation &mdash; equally at home leading cross-functional teams or contributing as a high-level IC.</p>
@@ -350,151 +508,135 @@
         <div class="hero-meta-item">Certification<span>ISTQB CTFL</span></div>
       </div>
     </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
   </div>
 
   <section id="experience">
     <div class="container">
-      <div class="section-label">Professional Experience</div>
+      <div class="section-label reveal">Professional Experience</div>
 
-      <div class="exp-item reveal">
-        <div class="exp-meta">
+      <div class="exp-item">
+        <div class="exp-meta reveal-left d1">
           <div class="exp-date">June 2025 &mdash; Present</div>
           <div class="exp-company">Creative Dash AI</div>
           <div class="exp-title">Staff Automation Architect</div>
         </div>
-        <div>
+        <div class="reveal-right d2">
           <ul class="exp-bullets">
             <li><strong>Infrastructure Reliability:</strong> Architected automated data flows for a SaaS platform, ensuring 99.9% reliability for real-time lead generation and AI phone agent deployments.</li>
             <li><strong>AI Validation Engineering:</strong> Designed custom validation layers for NWS weather data ingestion, using Python logic to filter and enrich data before CRM delivery &mdash; transforming a volatile feed into a predictable, high-value sales asset.</li>
             <li><strong>Quality Roadmap:</strong> Established end-to-end testing lifecycle for AI agent interactions, focusing on conversational accuracy and systemic uptime across diverse client environments.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">Python</span>
-            <span class="tag">AI Validation</span>
-            <span class="tag">Make.com</span>
-            <span class="tag">GoHighLevel</span>
-            <span class="tag">SaaS</span>
+            <span class="tag">Python</span><span class="tag">AI Validation</span><span class="tag">Make.com</span><span class="tag">GoHighLevel</span><span class="tag">SaaS</span>
           </div>
         </div>
       </div>
 
-      <div class="exp-item reveal">
-        <div class="exp-meta">
+      <div class="exp-item">
+        <div class="exp-meta reveal-left d1">
           <div class="exp-date">Jan 2024 &mdash; Jan 2026</div>
           <div class="exp-company">LavenirAI</div>
           <div class="exp-title">Staff Quality Engineer / AI Solutions Developer</div>
         </div>
-        <div>
+        <div class="reveal-right d2">
           <ul class="exp-bullets">
             <li><strong>AI-Driven QA:</strong> Established foundational QA frameworks for AI applications, utilizing LLMs to automate regression testing and reduce manual effort by 40%.</li>
             <li><strong>Stability at Scale:</strong> Implemented AI-driven performance testing protocols to ensure model accuracy and platform stability during rapid scaling phases.</li>
             <li><strong>Technical Oversight:</strong> Defined quality SLAs and led validation of complex backend systems, ensuring high-fidelity integration between AI agents and core infrastructure.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">LLM Validation</span>
-            <span class="tag">RAG Architecture</span>
-            <span class="tag">Pytest</span>
-            <span class="tag">CI/CD</span>
-            <span class="tag">Prompt Engineering</span>
+            <span class="tag">LLM Validation</span><span class="tag">RAG Architecture</span><span class="tag">Pytest</span><span class="tag">CI/CD</span><span class="tag">Prompt Engineering</span>
           </div>
         </div>
       </div>
 
-      <div class="exp-item reveal">
-        <div class="exp-meta">
+      <div class="exp-item">
+        <div class="exp-meta reveal-left d1">
           <div class="exp-date">June 2021 &mdash; Jan 2024</div>
           <div class="exp-company">DispatchHealth</div>
           <div class="exp-title">Software Engineer in Test / QA Engineer III</div>
         </div>
-        <div>
+        <div class="reveal-right d2">
           <ul class="exp-bullets">
             <li><strong>Framework Development:</strong> Built and maintained end-to-end automation frameworks for a high-stakes healthcare platform, prioritizing patient safety and HIPAA data integrity.</li>
             <li><strong>CI/CD Integration:</strong> Led integration of automated quality gates into the deployment pipeline, accelerating release cycles while maintaining zero critical production outages during a 10x growth phase.</li>
             <li><strong>Leadership &amp; Mentorship:</strong> Acted as technical lead for testing initiatives, guiding junior engineers in modern automation best practices.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">Cypress</span>
-            <span class="tag">Playwright</span>
-            <span class="tag">HIPAA</span>
-            <span class="tag">GitHub Actions</span>
-            <span class="tag">Healthcare</span>
+            <span class="tag">Cypress</span><span class="tag">Playwright</span><span class="tag">HIPAA</span><span class="tag">GitHub Actions</span><span class="tag">Healthcare</span>
           </div>
         </div>
       </div>
 
-      <div class="exp-item reveal">
-        <div class="exp-meta">
+      <div class="exp-item">
+        <div class="exp-meta reveal-left d1">
           <div class="exp-date">May 2019 &mdash; April 2021</div>
           <div class="exp-company">MiTek USA</div>
           <div class="exp-title">Lead Quality Assurance Analyst</div>
           <div class="exp-note">A Berkshire Hathaway Company</div>
         </div>
-        <div>
+        <div class="reveal-right d2">
           <ul class="exp-bullets">
             <li><strong>Enterprise Strategy:</strong> Directed QA initiatives for residential construction software, managing automated suites supporting global enterprise clients.</li>
             <li><strong>Process Optimization:</strong> Standardized testing protocols across distributed international teams, reducing post-release incidents by 25% and ensuring consistency in cloud-based software reliability.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">Enterprise QA</span>
-            <span class="tag">Cloud</span>
-            <span class="tag">Distributed Teams</span>
+            <span class="tag">Enterprise QA</span><span class="tag">Cloud</span><span class="tag">Distributed Teams</span>
           </div>
         </div>
       </div>
 
-      <div class="exp-item reveal">
-        <div class="exp-meta">
+      <div class="exp-item">
+        <div class="exp-meta reveal-left d1">
           <div class="exp-date">Nov 2015 &mdash; May 2019</div>
           <div class="exp-company">BuilderMT</div>
           <div class="exp-title">Lead QA Analyst / Product Owner</div>
         </div>
-        <div>
+        <div class="reveal-right d2">
           <ul class="exp-bullets">
             <li><strong>Team Management:</strong> Managed cross-functional QA teams as the primary bridge between Engineering and Product. Supported the Berkshire Hathaway acquisition migration and oversaw implementation of replacement practices.</li>
             <li><strong>Systemic Improvement:</strong> Overhauled the release cycle by introducing automated regression suites, reducing late-stage defects and cutting regression cycle times in half.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">Product Ownership</span>
-            <span class="tag">Regression Automation</span>
-            <span class="tag">M&amp;A Migration</span>
+            <span class="tag">Product Ownership</span><span class="tag">Regression Automation</span><span class="tag">M&amp;A Migration</span>
           </div>
         </div>
       </div>
 
-      <div class="exp-item reveal">
-        <div class="exp-meta">
+      <div class="exp-item">
+        <div class="exp-meta reveal-left d1">
           <div class="exp-date">Previous</div>
           <div class="exp-company">Dire Wolf Digital</div>
           <div class="exp-title">Senior Lead SQA Engineer</div>
         </div>
-        <div>
+        <div class="reveal-right d2">
           <ul class="exp-bullets">
             <li>Managed QA teams for game development including localization, performance, and functionality testing for high-profile titles including <em>The Elder Scrolls: Legends</em>.</li>
             <li>Developed automated test cases to increase efficiency in game testing workflows across iPad and PC platforms.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">Game QA</span>
-            <span class="tag">Localization</span>
-            <span class="tag">Performance Testing</span>
+            <span class="tag">Game QA</span><span class="tag">Localization</span><span class="tag">Performance Testing</span>
           </div>
         </div>
       </div>
 
-      <div class="exp-item reveal">
-        <div class="exp-meta">
+      <div class="exp-item">
+        <div class="exp-meta reveal-left d1">
           <div class="exp-date">Previous</div>
           <div class="exp-company">iBeta Quality Assurance</div>
           <div class="exp-title">Technical Advisor / Project Manager</div>
         </div>
-        <div>
+        <div class="reveal-right d2">
           <ul class="exp-bullets">
             <li>Managed enterprise QA projects across gaming, mobile, healthcare, and SaaS industries for startups and Fortune 500 clients.</li>
             <li>Oversaw stakeholder communication, project planning, and resource allocation across diverse technical stacks.</li>
           </ul>
           <div class="exp-tags">
-            <span class="tag">Multi-Industry</span>
-            <span class="tag">Project Management</span>
-            <span class="tag">Fortune 500</span>
+            <span class="tag">Multi-Industry</span><span class="tag">Project Management</span><span class="tag">Fortune 500</span>
           </div>
         </div>
       </div>
@@ -504,10 +646,10 @@
 
   <section id="projects">
     <div class="container">
-      <div class="section-label">Projects</div>
-      <div class="projects-grid reveal">
+      <div class="section-label reveal">Projects</div>
+      <div class="projects-grid">
 
-        <div class="project-card">
+        <div class="project-card reveal d1">
           <div class="project-num">01</div>
           <div class="project-name">STROMAI</div>
           <p class="project-desc">Storm monitoring platform that ingests live NWS weather alert polygons, resolves affected zip codes, and skip traces homeowner contact data &mdash; generating targeted leads for storm-dependent businesses like public adjusters. The same NWS validation architecture was deployed commercially at Creative Dash AI, achieving 99% lead reliability. Built on Node.js and Supabase.</p>
@@ -516,7 +658,7 @@
           </div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card reveal d2">
           <div class="project-num">02</div>
           <div class="project-name">Choosr</div>
           <p class="project-desc">AI-powered app that eliminates decision fatigue for everyday choices &mdash; food, plans, entertainment. Users pick a category and get a personalized AI recommendation; selections feed a learning loop that sharpens future suggestions over time. Built with React, Express, Supabase Auth, and OpenRouter. Live on Vercel.</p>
@@ -526,12 +668,22 @@
           </div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card reveal d3">
           <div class="project-num">03</div>
           <div class="project-name">Leadgen Scraper</div>
-          <p class="project-desc">Python web crawler built for lead generation at scale. Automates prospect discovery and data extraction across target domains, feeding downstream CRM and outreach pipelines &mdash; the same data ingestion discipline applied across professional engagements.</p>
+          <p class="project-desc">Python GUI app for lead generation at scale. Aggregates prospect data across Google and Bing, exports structured CSVs, and features iterative UI improvements. Automates prospect discovery to feed CRM and outreach pipelines directly.</p>
           <div class="project-links">
             <a href="https://github.com/Cannamander/leadgen-scraper" target="_blank" class="project-link">GitHub</a>
+          </div>
+        </div>
+
+        <div class="project-card reveal d4">
+          <div class="project-num">04</div>
+          <div class="project-name">This Site</div>
+          <p class="project-desc">Personal resume and portfolio built as a single-file HTML/CSS/JS app with animated gradient mesh backgrounds, custom cursor tracking, staggered scroll reveals, and live section detection. Deployed via GitHub Pages.</p>
+          <div class="project-links">
+            <a href="https://github.com/Cannamander/Cannamander.github.io" target="_blank" class="project-link">GitHub</a>
+            <a href="https://cannamander.github.io" target="_blank" class="project-link">Live</a>
           </div>
         </div>
 
@@ -541,77 +693,54 @@
 
   <section id="skills">
     <div class="container">
-      <div class="section-label">Technical Toolkit</div>
-      <div class="skills-grid reveal">
-
-        <div class="skill-group">
+      <div class="section-label reveal">Technical Toolkit</div>
+      <div class="skills-grid">
+        <div class="skill-group reveal d1">
           <h3>Testing</h3>
           <ul class="skill-list">
-            <li>Cypress</li>
-            <li>Playwright</li>
-            <li>Pytest</li>
-            <li>Postman</li>
-            <li>OWASP ZAP</li>
-            <li>Performance / Load Testing</li>
+            <li>Cypress</li><li>Playwright</li><li>Pytest</li>
+            <li>Postman</li><li>OWASP ZAP</li><li>Performance / Load Testing</li>
           </ul>
         </div>
-
-        <div class="skill-group">
+        <div class="skill-group reveal d2">
           <h3>AI &amp; LLM</h3>
           <ul class="skill-list">
-            <li>OpenAI API</li>
-            <li>RAG Architecture</li>
-            <li>Prompt Engineering</li>
-            <li>Model Validation</li>
-            <li>Context Optimization</li>
+            <li>OpenAI API</li><li>RAG Architecture</li><li>Prompt Engineering</li>
+            <li>Model Validation</li><li>Context Optimization</li>
           </ul>
         </div>
-
-        <div class="skill-group">
+        <div class="skill-group reveal d3">
           <h3>Infrastructure</h3>
           <ul class="skill-list">
-            <li>AWS / GCP</li>
-            <li>CI/CD (GitHub Actions / Jenkins)</li>
-            <li>Docker / Kubernetes</li>
-            <li>Linux / Windows</li>
+            <li>AWS / GCP</li><li>CI/CD (GitHub Actions / Jenkins)</li>
+            <li>Docker / Kubernetes</li><li>Linux / Windows</li>
           </ul>
         </div>
-
-        <div class="skill-group">
+        <div class="skill-group reveal d4">
           <h3>Development</h3>
           <ul class="skill-list">
-            <li>Python</li>
-            <li>Node.js / TypeScript</li>
-            <li>SQL</li>
-            <li>Webhooks / API Design</li>
+            <li>Python</li><li>Node.js / TypeScript</li>
+            <li>SQL</li><li>Webhooks / API Design</li>
           </ul>
         </div>
-
-        <div class="skill-group">
+        <div class="skill-group reveal d1">
           <h3>Automation &amp; CRM</h3>
           <ul class="skill-list">
-            <li>Make.com</li>
-            <li>Zapier</li>
-            <li>GoHighLevel</li>
-            <li>HubSpot</li>
+            <li>Make.com</li><li>Zapier</li><li>GoHighLevel</li><li>HubSpot</li>
           </ul>
         </div>
-
-        <div class="skill-group">
+        <div class="skill-group reveal d2">
           <h3>Compliance</h3>
           <ul class="skill-list">
-            <li>HIPAA / SOC2</li>
-            <li>Biometric Audits</li>
-            <li>OWASP Vulnerability Scanning</li>
-            <li>Data Integrity Standards</li>
+            <li>HIPAA / SOC2</li><li>Biometric Audits</li>
+            <li>OWASP Vulnerability Scanning</li><li>Data Integrity Standards</li>
           </ul>
         </div>
-
       </div>
 
-      <div style="margin-top:4rem;">
-        <div class="section-label">Certifications &amp; Education</div>
-        <div class="reveal">
+      <div style="margin-top:4.5rem;">
+        <div class="section-label reveal">Certifications &amp; Education</div>
+        <div class="reveal d1">
           <div class="cert-row">
             <div class="cert-badge">ISTQB</div>
             <div>
@@ -646,12 +775,59 @@
   </footer>
 
   <script>
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) e.target.classList.add('visible');
+    // Custom cursor
+    var cursor = document.getElementById('cursor');
+    var ring = document.getElementById('cursor-ring');
+    var glow = document.getElementById('mouse-glow');
+    var mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', function(e) {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+      glow.style.left = mx + 'px';
+      glow.style.top = my + 'px';
+    });
+
+    document.querySelectorAll('a, button').forEach(function(el) {
+      el.addEventListener('mouseenter', function() { document.body.classList.add('cursor-large'); });
+      el.addEventListener('mouseleave', function() { document.body.classList.remove('cursor-large'); });
+    });
+
+    (function animateRing() {
+      rx += (mx - rx) * 0.11;
+      ry += (my - ry) * 0.11;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    })();
+
+    // Nav scroll + active section
+    var nav = document.getElementById('nav');
+    var sections = document.querySelectorAll('section[id]');
+    var navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+      var current = '';
+      sections.forEach(function(s) {
+        if (window.scrollY >= s.offsetTop - 250) current = s.id;
       });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+      navLinks.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // Scroll reveal
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el) {
+      obs.observe(el);
+    });
   </script>
 
 </body>
