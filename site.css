@@ -490,11 +490,16 @@ a.footer-name { text-decoration: none; color: var(--muted); }
 ===================== */
 a.nav-logo { text-decoration: none; color: inherit; }
 
-.resume-page {
+/* Tall PDF viewer: avoid clipping (was overflow:hidden on .resume-page) + use dvh */
+body.page-resume {
   min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.resume-page {
   padding-top: 4.5rem;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -505,13 +510,11 @@ a.nav-logo { text-decoration: none; color: inherit; }
   max-width: min(1100px, 96vw);
 }
 .resume-main {
-  flex: 1;
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 2;
   padding: 1rem 0 1.75rem;
-  min-height: calc(100vh - 4.5rem);
 }
 .resume-toolbar {
   display: flex;
@@ -537,8 +540,6 @@ a.nav-logo { text-decoration: none; color: inherit; }
   align-items: center;
 }
 .resume-frame-wrap {
-  flex: 1;
-  min-height: 0;
   border: 1px solid var(--border);
   background: var(--surface);
   border-radius: 4px;
@@ -548,8 +549,9 @@ a.nav-logo { text-decoration: none; color: inherit; }
 .resume-frame-wrap iframe {
   display: block;
   width: 100%;
-  /* Large reading area: scales with viewport, capped so short laptops don’t overflow */
-  height: clamp(520px, calc(100vh - 12.5rem), 1600px);
+  /* One explicit height: dynamic viewport minus nav + headline row (dvh fixes mobile browser chrome) */
+  height: calc(100dvh - 12.75rem);
+  min-height: 520px;
   border: none;
 }
 
@@ -564,7 +566,7 @@ a.nav-logo { text-decoration: none; color: inherit; }
   .resume-toolbar { flex-direction: column; align-items: flex-start; }
   .resume-main { padding: 0.75rem 0 1.25rem; }
   .resume-frame-wrap iframe {
-    min-height: 58vh;
-    height: calc(100svh - 10.5rem);
+    height: calc(100dvh - 11.25rem);
+    min-height: 50dvh;
   }
 }
