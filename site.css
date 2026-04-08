@@ -501,13 +501,16 @@ a.nav-logo { text-decoration: none; color: inherit; }
 .resume-page .hero-grid {
   mask-image: radial-gradient(ellipse 95% 85% at 50% 30%, black 18%, transparent 78%);
 }
+.resume-page .container {
+  max-width: min(1100px, 96vw);
+}
 .resume-main {
   flex: 1;
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 2;
-  padding: 2rem 0 3.5rem;
+  padding: 1rem 0 1.75rem;
   min-height: calc(100vh - 4.5rem);
 }
 .resume-toolbar {
@@ -516,7 +519,8 @@ a.nav-logo { text-decoration: none; color: inherit; }
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.65rem;
+  flex-shrink: 0;
 }
 .resume-title {
   font-family: var(--serif);
@@ -544,8 +548,8 @@ a.nav-logo { text-decoration: none; color: inherit; }
 .resume-frame-wrap iframe {
   display: block;
   width: 100%;
-  height: min(82vh, 920px);
-  min-height: 520px;
+  /* Large reading area: scales with viewport, capped so short laptops don’t overflow */
+  height: clamp(520px, calc(100vh - 12.5rem), 1600px);
   border: none;
 }
 
@@ -558,5 +562,9 @@ a.nav-logo { text-decoration: none; color: inherit; }
   body { cursor: auto; }
   #cur-dot, #cur-ring, #cur-glow { display: none !important; }
   .resume-toolbar { flex-direction: column; align-items: flex-start; }
-  .resume-frame-wrap iframe { min-height: 65vh; height: 72vh; }
+  .resume-main { padding: 0.75rem 0 1.25rem; }
+  .resume-frame-wrap iframe {
+    min-height: 58vh;
+    height: calc(100svh - 10.5rem);
+  }
 }
