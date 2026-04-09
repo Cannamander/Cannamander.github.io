@@ -30,7 +30,7 @@
       <li><a href="index.html#projects">Projects</a></li>
       <li><a href="index.html#building">Building</a></li>
       <li><a href="index.html#skills">Skills</a></li>
-      <li><a href="/cdn-cgi/l/email-protection#245045524d57424b4a43644349454d480a474b49" class="btn btn-primary" style="padding:0.4rem 1rem;">Hire me</a></li>
+      <li><a href="mailto:tavisfong@gmail.com?subject=Portfolio%20%E2%80%94%20Hire%20me&body=Hi%20Tavis,%0D%0A%0D%0AI%27d%20like%20to%20talk%20about...%0D%0A%0D%0AName:%0D%0ACompany:%0D%0ATimezone:%0D%0A%0D%0AThanks,%0D%0A" class="btn btn-primary" style="padding:0.4rem 1rem;">Hire me</a></li>
     </ul>
   </nav>
 
@@ -41,11 +41,15 @@
         <h1 class="resume-title">Résumé &mdash; <em>Tavis Fong</em></h1>
         <div class="resume-toolbar-actions">
           <a href="index.html" class="btn">← Home</a>
-          <a href="assets/tavis-fong-code-resume.pdf" download class="btn btn-primary">Download PDF</a>
+          <button id="resume-variant-toggle" type="button" class="btn" aria-pressed="false">
+            Light version
+          </button>
+          <a id="resume-download" href="assets/tavis-fong-code-resume.pdf" download class="btn btn-primary">Download PDF</a>
         </div>
       </div>
       <div class="resume-frame-wrap">
         <iframe
+          id="resume-frame"
           src="assets/tavis-fong-code-resume.pdf"
           title="Tavis Fong — Résumé"
         ></iframe>
@@ -61,13 +65,47 @@
           <a href="https://github.com/Cannamander" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="https://linkedin.com/in/tavisfong" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href="tel:3036674548">303-667-4548</a>
-          <a href="/cdn-cgi/l/email-protection#b7c3d6c1dec4d1d8d9d0f7d0dad6dedb99d4d8da">Email</a>
+          <a href="mailto:tavisfong@gmail.com?subject=Portfolio%20%E2%80%94%20Email">Email</a>
         </div>
       </div>
     </div>
   </footer>
 
   <script src="site.js"></script>
+  <script>
+    (function() {
+      var DARK_SRC = 'assets/tavis-fong-code-resume.pdf';
+      var LIGHT_SRC = 'assets/tavis-fong-code-resume-light.pdf';
+
+      var frame = document.getElementById('resume-frame');
+      var download = document.getElementById('resume-download');
+      var toggle = document.getElementById('resume-variant-toggle');
+
+      if (!frame || !download || !toggle) return;
+
+      function setVariant(variant) {
+        var isLight = variant === 'light';
+        var src = isLight ? LIGHT_SRC : DARK_SRC;
+
+        frame.setAttribute('src', src);
+        download.setAttribute('href', src);
+
+        toggle.textContent = isLight ? 'Dark version' : 'Light version';
+        toggle.setAttribute('aria-pressed', String(isLight));
+
+        try { localStorage.setItem('resumeVariant', isLight ? 'light' : 'dark'); } catch (e) {}
+      }
+
+      toggle.addEventListener('click', function() {
+        var current = (toggle.getAttribute('aria-pressed') === 'true') ? 'light' : 'dark';
+        setVariant(current === 'light' ? 'dark' : 'light');
+      });
+
+      var saved = null;
+      try { saved = localStorage.getItem('resumeVariant'); } catch (e) {}
+      setVariant(saved === 'light' ? 'light' : 'dark');
+    })();
+  </script>
 
 </body>
 </html>
